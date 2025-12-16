@@ -75,14 +75,14 @@ const blogPosts = [
     date: "Nov 28, 2025",
     title:
       "The React and React Native: let's learn react for app developer",
-    image: "/images/blog1.png",
+    image: "src/assets/react.svg",
     link: "",
   },
   {
     id: 2,
     date: "Nov 28, 2025",
     title: "How did it impact AI-powered coding development and quality control?",
-    image: "/images/blog2.png",
+    image: "src/assets/react.svg",
     link: "",
   },
 ];
