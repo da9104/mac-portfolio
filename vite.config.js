@@ -1,22 +1,40 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from "@tailwindcss/vite";
-import {resolve,dirname} from "path";
+import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  optimizeDeps: {
-    include: ['gsap', 'gsap/Draggable'], 
+   define: {
+    global: 'globalThis', // Fix React legacy warning
   },
-  resolve : {
-      alias : {
-          '@components' : resolve(dirname(fileURLToPath(import.meta.url)),'src/components'),
-          '@constants' : resolve(dirname(fileURLToPath(import.meta.url)),'src/constants'),
-          '@store' : resolve(dirname(fileURLToPath(import.meta.url)),'src/store'),
-          '@hoc' : resolve(dirname(fileURLToPath(import.meta.url)),'src/hoc'),
-          '@windows' : resolve(dirname(fileURLToPath(import.meta.url)),'src/windows')
+  optimizeDeps: {
+    include: ['gsap', 'gsap/Draggable'],
+  },
+  resolve: {
+    alias: {
+      "@": resolve(dirname(fileURLToPath(import.meta.url)), "./src"),
+      '@components': resolve(dirname(fileURLToPath(import.meta.url)), 'src/components'),
+      '@constants': resolve(dirname(fileURLToPath(import.meta.url)), 'src/constants'),
+      '@store': resolve(dirname(fileURLToPath(import.meta.url)), 'src/store'),
+      '@hoc': resolve(dirname(fileURLToPath(import.meta.url)), 'src/hoc'),
+      '@windows': resolve(dirname(fileURLToPath(import.meta.url)), 'src/windows')
+    }
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./src/setupTests.js",
+    include: ['**/*.{test,spec}.{js,jsx,ts,tsx}'],
+    // Mock react-pdf automatically
+    // mockReset: true,
+    // Vitest auto-mocks modules in __mocks__
+    deps: {
+      optimizer: {
+        web: ['react-pdf', 'pdfjs-dist']
       }
     }
+  },
 })

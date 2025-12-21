@@ -79,7 +79,7 @@ const Welcome = () => {
     }, [])
 
     return <section id='welcome'>
-        <p ref={titleRef}>
+        <p ref={titleRef} data-testid='hello'>
             {
                 renderText("Hello", "text-9xl italic font-georama")
             }
