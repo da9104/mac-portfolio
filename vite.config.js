@@ -7,7 +7,16 @@ import { fileURLToPath } from "url";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+   build: {
+    outDir: 'dist/client',  // Client assets here
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html')
+      }
+    }
+  },
   ssr: {
+    outDir: 'dist/server',
     noExternal: ['pdfjs-dist'],
     external: ['@notionhq/client']
     // Or try adding it to external if you want Node to ignore it:
