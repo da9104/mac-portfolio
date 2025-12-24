@@ -62,5 +62,8 @@
     "vite": {
       "rollup": "npm:@rollup/wasm-node@4.40.1"
     }
+  },
+   "resolutions": {
+    "gsap": "3.14.2"
   }
 }
