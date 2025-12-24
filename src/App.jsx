@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import gsap from 'gsap';
 import './App.css'
-import { Draggable } from 'gsap/Draggable';
+import { gsap } from "gsap";
+import { Draggable } from "gsap/all";
 gsap.registerPlugin(Draggable);
 
 import { ClientOnly } from '@/ClientOnly';

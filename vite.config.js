@@ -17,8 +17,8 @@ export default defineConfig({
   },
   ssr: {
     outDir: 'dist/server',
-    noExternal: ['pdfjs-dist'],
-    external: ['gsap/Draggable', 'gsap', 'gsap/ScrollTrigger', '@notionhq/client']
+    noExternal: ['pdfjs-dist', 'gsap'],
+    external: ['@notionhq/client']
     // Or try adding it to external if you want Node to ignore it:
     // external: ['pdfjs-dist']
   },

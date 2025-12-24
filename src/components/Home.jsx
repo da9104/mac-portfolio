@@ -2,8 +2,7 @@ import useWindowStore from '@store/window'
 import { locations } from '@constants'
 import { useGSAP } from '@gsap/react'
 import clsx from 'clsx'
-import { useEffect, useRef } from 'react'
-import { Draggable } from 'gsap/Draggable'
+import { Draggable } from "gsap/all";
 import useLocationStore from '@store/location'
 
 const projects = locations.work?.children ?? []
