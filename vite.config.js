@@ -17,8 +17,8 @@ export default defineConfig({
   },
   ssr: {
     outDir: 'dist/server',
-    noExternal: ['pdfjs-dist'],
-    external: ['@notionhq/client']
+    noExternal: ['pdfjs-dist', '@notionhq/client'],
+    // external: ['@notionhq/client']
     // Or try adding it to external if you want Node to ignore it:
     // external: ['pdfjs-dist']
   },

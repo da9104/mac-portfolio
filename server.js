@@ -3,9 +3,17 @@ global.DOMMatrix = DOMMatrix;
 import fs from 'node:fs/promises'
 import express from 'express'
 import { getDatabaseContents, getDatabaseMetadata } from './server/notionHandler.js';
-
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 import dotenv from 'dotenv'
 dotenv.config()
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+export const app = express()
+
+app.use(express.static(join(__dirname, 'dist/client')))
+app.use('/assets', express.static(join(__dirname, 'dist/client/assets')))
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -16,9 +24,6 @@ const base = process.env.BASE || '/'
 const templateHtml = isProduction
   ? await fs.readFile('./dist/client/index.html', 'utf-8')
   : ''
-
-// Create http server
-export const app = express()
 
 // Add Vite or respective production middlewares
 /** @type {import('vite').ViteDevServer | undefined} */
@@ -82,3 +87,5 @@ app.use('*all', async (req, res) => {
 // app.listen(port, () => {
 //   console.log(`Server started at http://localhost:${port}`)
 // })
+
+export default app
