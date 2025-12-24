@@ -1,6 +1,6 @@
 import { WindowControls } from '@components'
 import WindowWrapper from '@hoc/WindowWrapper'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     ChevronLeft,
     ChevronRight,
@@ -14,10 +14,18 @@ import {
 } from 'lucide-react'
 import { blogPosts } from '@constants'
 
-const Safari = ({ posts }) => {
-
-    // console.log(posts)
-
+const Safari = ({ initialState }) => {
+      const [posts, setPosts] = useState(initialState?.posts || []);
+    
+      useEffect(() => {
+        if (posts.length === 0) {
+          setPosts(blogPosts)
+        }
+      }, [posts.length]);
+    
+      const getTitle = (item) => item?.properties?.Title?.title?.[0]?.plain_text || 'Untitled'
+      
+      // console.log(posts)
     return (
         <>
             <div id='window-header'>
@@ -46,23 +54,21 @@ const Safari = ({ posts }) => {
                 <div className='space-y-8'>
 
                     {posts && posts.map((item, index) => {
-                        const titleProperty = item.properties.Title
-                        const title = titleProperty.title[0]?.plain_text || "Untitled"
-                        const publishedDate = item.properties.PublishedDate.date.start
+                        const publishedDate = item.properties?.PublishedDate?.date?.start || '--'
 
                         return (
                             <div key={item.id} className='blog-post'>
                                 <div className='content'>
                                     <p className='text-xs'>{publishedDate}</p>
                                     <a href={item.public_url ?? null}>
-                                        <h3>{title || item.title}</h3>
+                                        <h3>{getTitle(item)}</h3>
                                     </a>
                                 </div>
                             </div>
                         )
                     })}
 
-                    
+
                 </div>
             </div>
         </>

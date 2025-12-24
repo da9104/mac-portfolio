@@ -2,7 +2,7 @@ import { DOMMatrix } from 'canvas'; // You may need to install the 'canvas' pack
 global.DOMMatrix = DOMMatrix;
 import fs from 'node:fs/promises'
 import express from 'express'
-import { getDatabaseContents, getDatabaseMetadata } from './server/notionHandler.js';
+// import { getDatabaseContents, getDatabaseMetadata } from './server/notionHandler.js';
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 import dotenv from 'dotenv'
@@ -62,9 +62,9 @@ app.use('*all', async (req, res) => {
       render = (await import('./dist/server/entry-server.js')).render
     }
       
-    const posts = await getDatabaseContents(); 
+    // const posts = await getDatabaseContents(); 
     
-    const { html, head, initialState } = await render(url, { posts });
+    const { html, head, initialState } = await render(url);
    
     const finalHtml = template
       .replace(`<!--app-head-->`, head ?? '')

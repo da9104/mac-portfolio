@@ -59,6 +59,6 @@ export async function getDatabaseContents() {
 
   } catch (error) {
     console.error("Detailed Query Error:", error);
-    return [];
+    return { results: [] };
   }
 }

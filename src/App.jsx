@@ -8,16 +8,8 @@ import { ClientOnly } from '@/ClientOnly';
 
 import { Dock, Home, Navbar, Welcome } from '@components';
 import { Contact, Finder, Safari, Image, Text, Terminal, Photos, Resume } from '@windows'
-import { blogPosts } from '@constants'
 
-function App({ initialState }) {
-  const [posts, setPosts] = useState(initialState?.posts || []);
-
-  useEffect(() => {
-    if (posts.length === 0) {
-      setPosts(blogPosts)
-    }
-  }, [posts.length]);
+function App({ initialState = [] }) {
 
   return (
     <main suppressHydrationWarning>
@@ -26,7 +18,7 @@ function App({ initialState }) {
       <Navbar  />
       <Welcome />
       <Contact />
-      <Safari posts={posts}/>
+      <Safari initialState={initialState}/>
       <Finder />
       <Image />
       <Text />
