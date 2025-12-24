@@ -1,7 +1,4 @@
 {
- "builds": [
-    { "src": "package.json", "use": "@vercel/static-build" }
-  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index.js" }],
   "functions": {
     "api/index.js": {
