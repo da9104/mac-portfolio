@@ -19,6 +19,12 @@ const Resume = () => {
     const [precheckDone, setPrecheckDone] = useState(false)
 
     useEffect(() => {
+        // this runs only in browser
+        console.log(window.innerWidth);
+
+    }, []);
+
+    useEffect(() => {
         let cancelled = false
         fetch(RESUME_PATH, { method: 'HEAD' })
             .then(res => {
@@ -70,10 +76,10 @@ const Resume = () => {
             )}
 
             {precheckDone && !pdfError && (
-                <Document 
-                file={RESUME_PATH}
-                onLoadSuccess={onDocumentLoadSuccess}
-                onLoadError={onDocumentLoadError}
+                <Document
+                    file={RESUME_PATH}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                    onLoadError={onDocumentLoadError}
                 >
                     {!isLoading && !pdfError && <Page pageNumber={1} />}
                 </Document>
