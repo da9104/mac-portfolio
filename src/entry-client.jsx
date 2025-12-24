@@ -3,11 +3,11 @@ import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import App from './App'
 
-const initialState = window.__INITIAL_STATE__ || null;
+const initialPosts = window.__INITIAL_STATE__?.posts || [];
 
 hydrateRoot(
   document.getElementById('root'),
   <StrictMode>
-    <App initialState={initialState} />
+    <App initialPosts={initialPosts} />
   </StrictMode>,
 )

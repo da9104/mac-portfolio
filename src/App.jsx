@@ -9,7 +9,7 @@ import { ClientOnly } from '@/ClientOnly';
 import { Dock, Home, Navbar, Welcome } from '@components';
 import { Contact, Finder, Safari, Image, Text, Terminal, Photos, Resume } from '@windows'
 
-function App({ initialState = [] }) {
+function App({ initialPosts = [] }) {
 
   return (
     <main suppressHydrationWarning>
@@ -18,7 +18,7 @@ function App({ initialState = [] }) {
       <Navbar  />
       <Welcome />
       <Contact />
-      <Safari initialState={initialState}/>
+      <Safari initialPosts={initialPosts}/>
       <Finder />
       <Image />
       <Text />

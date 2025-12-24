@@ -14,8 +14,8 @@ import {
 } from 'lucide-react'
 import { blogPosts } from '@constants'
 
-const Safari = ({ initialState }) => {
-      const [posts, setPosts] = useState(initialState?.posts || []);
+const Safari = ({ initialPosts }) => {
+      const [posts, setPosts] = useState(initialPosts || []);
     
       useEffect(() => {
         if (posts.length === 0) {
