@@ -15,7 +15,7 @@ import {
 import { blogPosts } from '@constants'
 
 const Safari = ({ initialPosts }) => {
-      const [posts, setPosts] = useState(initialPosts || []);
+      const [posts, setPosts] = useState(initialPosts ?? []);
     
       useEffect(() => {
         if (posts.length === 0) {
@@ -68,6 +68,18 @@ const Safari = ({ initialPosts }) => {
                         )
                     })}
 
+                    {/* {posts.length === 0 && blogPosts.map(({ id, image, title, date, link }) => (
+                        <div key={id} className='blog-post'>
+                            <div className='col-span-2'> 
+                               <img src={image} alt={title} />
+                            </div>
+
+                            <div className='content'>
+                                <p>{date}</p>
+                                <h3>{title}</h3>
+                            </div>
+                        </div>
+                    ))} */}
 
                 </div>
             </div>
