@@ -27,7 +27,7 @@ export default defineConfig({
     global: 'globalThis', // Fix React legacy warning
   },
   optimizeDeps: {
-    include: ['gsap', 'gsap/Draggable'],
+    include: ['gsap', 'gsap/Draggable', '@notionhq/client'],
   },
   resolve: {
     alias: {

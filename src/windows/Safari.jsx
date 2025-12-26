@@ -15,17 +15,18 @@ import {
 import { blogPosts } from '@constants'
 
 const Safari = ({ initialPosts }) => {
-      const [posts, setPosts] = useState(initialPosts ?? []);
+      const postsArray = Array.isArray(initialPosts) ? initialPosts : [];
+      //   const [posts, setPosts] = useState(initialPosts ?? []);
     
       useEffect(() => {
-        if (posts.length === 0) {
-          setPosts(blogPosts)
-        }
-      }, [posts.length]);
+         
+        console.log(postsArray, "safari")
+
+      }, [postsArray.length]);
     
       const getTitle = (item) => item?.properties?.Title?.title?.[0]?.plain_text || 'Untitled'
       
-      // console.log(posts)
+
     return (
         <>
             <div id='window-header'>
@@ -53,7 +54,7 @@ const Safari = ({ initialPosts }) => {
 
                 <div className='space-y-8'>
 
-                    {posts && posts.map((item, index) => {
+                    {postsArray && postsArray.map((item, index) => {
                         const publishedDate = item.properties?.PublishedDate?.date?.start || '--'
 
                         return (

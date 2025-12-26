@@ -8,7 +8,11 @@ import { ClientOnly } from '@/ClientOnly';
 import { Dock, Home, Navbar, Welcome } from '@components';
 import { Contact, Finder, Safari, Image, Text, Terminal, Photos, Resume } from '@windows'
 
-function App({ initialPosts = [] }) {
+function App({ initialPosts }) {
+
+  useEffect(() => {
+    console.log(initialPosts)
+  }, [])
 
   return (
     <main suppressHydrationWarning>

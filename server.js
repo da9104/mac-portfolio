@@ -1,19 +1,19 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import { DOMMatrix } from 'canvas'; // You may need to install the 'canvas' package
 global.DOMMatrix = DOMMatrix;
 import fs from 'node:fs/promises'
 import express from 'express'
-// import { getDatabaseContents, getDatabaseMetadata } from './server/notionHandler.js';
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
-import dotenv from 'dotenv'
-dotenv.config()
 
+import { getDatabaseContents } from './server/notionHandler.js';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 export const app = express()
 
-app.use(express.static(join(__dirname, 'dist/client')))
-app.use('/assets', express.static(join(__dirname, 'dist/client/assets')))
+app.use(express.static(join(__dirname, 'dist/client'), { index: false }))
+app.use('/assets', express.static(join(__dirname, 'dist/client/assets'), { index: false }))
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -40,7 +40,7 @@ if (!isProduction) {
   const compression = (await import('compression')).default
   const sirv = (await import('sirv')).default
   app.use(compression())
-  app.use(base, sirv('./dist/client', { extensions: [] }))
+  app.use(base, sirv('./dist/client', { extensions: [], index: false }))
 }
 
 // Serve HTML
@@ -61,19 +61,31 @@ app.use('*all', async (req, res) => {
       template = templateHtml
       render = (await import('./dist/server/entry-server.js')).render
     }
-      
-    // const posts = await getDatabaseContents(); 
+
+    const posts = await getDatabaseContents();
+
+    console.log('Server-side posts check:', Array.isArray(posts));
     
-    const { html, head, initialState } = await render(url);
-   
+    if (!Array.isArray(posts)) {
+      console.log("SSR Error: posts is actually:", typeof posts, posts);
+      return ;
+    }
+
+    const { html, head, initialState } = await render(url, { posts });
+
+    const stateScript = `<script>window.__INITIAL_STATE__=${JSON.stringify(initialState || {})}</script>`;
+
     const finalHtml = template
       .replace(`<!--app-head-->`, head ?? '')
       .replace(`<!--app-html-->`, html ?? '')
-      .replace(
-        '<!--app-state-->',
-        `<script>window.__INITIAL_STATE__=${JSON.stringify(initialState || {})}</script>`
-      );
+      .replace('</body>', `${stateScript}</body>`);
+      
+      // .replace(
+      //   '<!--app-state-->',
+      //   `<script>window.__INITIAL_STATE__=${JSON.stringify(initialState || {})}</script>`
+      // );
 
+    console.log("Does finalHtml contain INITIAL_STATE?", finalHtml.includes('window.__INITIAL_STATE__'));
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(finalHtml)
   } catch (e) {
@@ -83,9 +95,10 @@ app.use('*all', async (req, res) => {
   }
 })
 
-// Start http server
-// app.listen(port, () => {
-//   console.log(`Server started at http://localhost:${port}`)
-// })
+if (process.env.NODE_ENV === 'development') {
+  app.listen(port, () => {
+    console.log(`Server started at http://localhost:${port}`)
+  })
+}
 
 export default app

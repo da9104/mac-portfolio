@@ -10,7 +10,7 @@ const notion = new Client({
 
 const DATABASE_ID = env.NOTION_DATABASE_ID
 
-const DATA_SOURCE_ID = '2d1b2830-55a4-81fd-a3e7-000ba6642a0b'
+const DATA_SOURCE_ID = env.NOTION_DATA_SOURCE_ID
 
 export async function getDatabaseMetadata() {
   try {
