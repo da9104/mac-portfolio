@@ -9,6 +9,7 @@ import {
     PanelLeft,
     Plus,
     Search,
+    CircleSmall,
     Share,
     ShieldHalf
 } from 'lucide-react'
@@ -50,7 +51,11 @@ const Safari = ({ initialPosts }) => {
             </div>
 
             <div className='blog' >
-                <h2>My blog</h2>
+                <div className='flex flew-row justify-between'> 
+                    <h2>My blog</h2> 
+                    <span className='text-xs flex flex-row justify-center'>
+                        Notion Connection on <CircleSmall size={14} color="" className='rounded-full bg-green-500 ml-1 mt-[0.1rem]'/> </span> 
+                </div>
 
                 <div className='space-y-8'>
 
